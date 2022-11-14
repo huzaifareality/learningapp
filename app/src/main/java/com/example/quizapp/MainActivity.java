@@ -42,12 +42,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadNewQuestion();
     }
 
+    @Override
     public void onClick(View view)
     {
-        b1.setBackgroundColor(Color.WHITE);
-        b2.setBackgroundColor(Color.WHITE);
-        b3.setBackgroundColor(Color.WHITE);
-        b4.setBackgroundColor(Color.WHITE);
+        b1.setBackgroundColor(Color.BLACK);
+        b2.setBackgroundColor(Color.BLACK);
+        b3.setBackgroundColor(Color.BLACK);
+        b4.setBackgroundColor(Color.BLACK);
 
 
         Button clickbtn = (Button) view;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void loadNewQuestion()
     {
-        if (currentIndex == totalQ)
+        if (currentIndex == Question)
         {
             finish();
             return;
@@ -82,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         b4.setText(questions.options[currentIndex][3]);
     }
 
-    void finish()
+    public void finish()
     {
         String status= "";
-        if (score> totalQ*0.60)
+        if (score > Question*0.60)
         {
             status = "passed";
         }
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setMessage("score is  " + score)
                 .setPositiveButton("Restart", (dialogInterface, i) -> restart())
                 .setCancelable(false)
-                .show()
+                .show();
     }
     void restart()
     {
