@@ -2,6 +2,8 @@ package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,16 +44,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View view)
     {
+        b1.setBackgroundColor(Color.WHITE);
+        b2.setBackgroundColor(Color.WHITE);
+        b3.setBackgroundColor(Color.WHITE);
+        b4.setBackgroundColor(Color.WHITE);
 
+
+        Button clickbtn = (Button) view;
+        if(clickbtn.getId() == R.id.button5)
+        {
+            if (selectedIndex.equals(questions.correctAns[currentIndex])) {
+                score++;
+            }
+            loadNewQuestion();
+            currentIndex++;
+
+        }
+        else
+        {
+           selectedIndex = clickbtn.getText().toString();
+           clickbtn.setBackgroundColor(Color.GREEN);
+        }
     }
 
     void loadNewQuestion()
     {
+        if (currentIndex == totalQ)
+        {
+            finish();
+            return;
+        }
+
         question.setText(questions.question[currentIndex]);
         b1.setText(questions.options[currentIndex][0]);
         b2.setText(questions.options[currentIndex][1]);
         b3.setText(questions.options[currentIndex][2]);
         b4.setText(questions.options[currentIndex][3]);
+    }
+
+    void finish()
+    {
+        String status= "";
+        if (score> totalQ*0.60)
+        {
+            status = "passed";
+        }
+        else
+        {
+            status = "failed";
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(status)
+                .setMessage("score is  " + score)
+                .setPositiveButton("Restart", (dialogInterface, i) -> restart())
+                .setCancelable(false)
+                .show()
+    }
+    void restart()
+    {
+        score=0;
+        currentIndex=0;
+        loadNewQuestion();
     }
 }
 
